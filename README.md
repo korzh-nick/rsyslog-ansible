@@ -15,6 +15,7 @@ vars/main.yml:
 ```
 host_name: ""
 logstash_host_ip: ""
+logs_path: "/var/log/nginx"
 ```
 
 ## Host iptables 
