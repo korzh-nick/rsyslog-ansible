@@ -1,0 +1,3 @@
+host_name: ""
+logstash_host_ip: ""
+rsyslog_d: /etc/rsyslog.d

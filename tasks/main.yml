@@ -1,0 +1,23 @@
+---
+- name:  Install rsyslog
+  package:
+    name: rsyslog
+    state: present
+
+- name: Add syslog user to www-data group
+  user:
+    name: syslog
+    append: yes
+    groups: www-data
+  notify: restart rsyslog
+
+- name:  Setup rsyslog scripts
+  template: src={{ item }}.j2 dest={{ rsyslog_d }}/{{ item }}
+  with_items:
+    - 60-output.conf
+    - 50-input.conf
+  notify: restart rsyslog
+  
+- name: Add dateext to /etc/logrotate.conf
+  shell: >
+    echo "dateext" >> /etc/logrotate.conf

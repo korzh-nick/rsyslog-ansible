@@ -1,0 +1,16 @@
+# this section can show up in all your rsyslog config files, so just leave it here
+#$ModLoad imfile # Load the imfile input module
+module(load="imfile")
+
+# Watch /srv/www/{{ host_name }}/logs/{{ host_name }}-access.log
+$InputFileName /srv/www/{{ host_name }}/logs/{{ host_name }}-access.log #can NOT use wildcards – this is where logstash-forwarder would be nice
+$InputFileTag nginx-access: #Logstash throws grok errors if the “:” is anywhere besides at the end; shows up as “Program” in Logstash
+$InputFileStateFile state-nginx-access #can be anything; unique id used by rsyslog
+$InputRunFileMonitor
+
+# Here’s a clean block, this time for an nginx error log
+# Watch /srv/www/{{ host_name }}/logs/{{ host_name }}-error.log
+$InputFileName /srv/www/{{ host_name }}/logs/{{ host_name }}-error.log
+$InputFileTag nginx-error:
+$InputFileStateFile state-nginx-error
+$InputRunFileMonitor
